@@ -1,6 +1,5 @@
 import shutil
 import tempfile
-from functools import cache
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
