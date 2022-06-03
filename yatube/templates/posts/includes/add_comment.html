@@ -1,18 +1,18 @@
 {% load user_filters %}
 
 
-  <div class="card my-4">
-    <h5 class="card-header">Добавить комментарий:</h5>
-    <div class="card-body">
-      <form method="post" action="{% url 'posts:add_comment' posts.id %}">
-        {% csrf_token %}
-        <div class="form-group mb-2">
-          {{ form.text|addclass:"form-control" }}
-        </div>
-        <button type="submit" class="btn btn-primary">Отправить</button>
-      </form>
-    </div>
+<div class="card my-4">
+  <h5 class="card-header">Добавить комментарий:</h5>
+  <div class="card-body">
+    <form method="post" action="{% url 'posts:add_comment' posts.id %}">
+      {% csrf_token %}
+      <div class="form-group mb-2">
+        {{ form.text|addclass:"form-control" }}
+      </div>
+      <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
   </div>
+</div>
 
 
 {% for comment in comments %}

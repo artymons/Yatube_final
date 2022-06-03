@@ -18,6 +18,20 @@ class TaskURLTests(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        small_gif2 = (
+            b'\x47\x49\x46\x38\x39\x61\x02\x00'
+            b'\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
+            b'\x00\x00\x00\x2C\x00\x00\x00\x00'
+            b'\x02\x00\x01\x00\x00\x02\x02\x0C'
+            b'\x0A\x00\x3B'
+        )
+        uploaded2 = SimpleUploadedFile(
+            name='small.gif2',
+            content=small_gif2,
+            content_type='image/gif2'
+        )
+
         cls.user = User.objects.create_user(username='auth')
         cls.group = Group.objects.create(
             title='Тестовая группа',
@@ -33,6 +47,7 @@ class TaskURLTests(TestCase):
             author=cls.user,
             text='Тестовая пост',
             group=cls.group,
+            image=uploaded2,
         )
 
     @classmethod
@@ -80,19 +95,30 @@ class TaskURLTests(TestCase):
         # Проверяем, увеличилось ли число постов
         self.assertEqual(Post.objects.count(), posts_count + 1)
         # Проверяем, что создалась запись с заданным слагом
-        self.assertTrue(
-            Post.objects.filter(
-                group=self.group.id,
-                text='Тестовый заголовок',
-                image='posts/small.gif'
-            ).exists()
-        )
+        post_2 = Post.objects.get(id=Post.objects.count())
+        self.assertEqual(post_2.text, 'Тестовый заголовок')
+        self.assertEqual(post_2.group, self.group)
+        self.assertEqual(post_2.image, 'posts/small.gif')
 
     def test_authorized_edit_post(self):
         """Авторизованный может редактировать."""
+        small_gif = (
+            b'\x47\x49\x46\x38\x39\x61\x02\x00'
+            b'\x01\x00\x80\x00\x00\x00\x00\x00'
+            b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
+            b'\x00\x00\x00\x2C\x00\x00\x00\x00'
+            b'\x02\x00\x01\x00\x00\x02\x02\x0C'
+            b'\x0A\x00\x3B'
+        )
+        uploaded = SimpleUploadedFile(
+            name='small3.gif',
+            content=small_gif,
+            content_type='image/gif'
+        )
         form_data2 = {
             'text': 'Измененный текст',
-            'group': self.group2.id
+            'group': self.group2.id,
+            'image': uploaded
         }
         self.authorized_client.post(
             reverse('posts:post_edit',
@@ -105,6 +131,7 @@ class TaskURLTests(TestCase):
         post_2 = Post.objects.get(id=self.post.id)
         self.assertEqual(post_2.text, 'Измененный текст')
         self.assertEqual(post_2.group, self.group2)
+        self.assertEqual(post_2.image, 'posts/small3.gif')
 
     def test_authorized_comment(self):
         """Авторизованный может коментить."""

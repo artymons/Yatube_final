@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Custom 500{% endblock %}
 {% block content %}
-    <h1>Custom 500</h1>
+  <h1>Custom 500</h1>
+  <p>Ошибка 500 (Internal Server Error) — это внутренняя проблема сервера. Она возникает, когда браузер или другой клиент отправляет серверу запрос, а тот не может его обработать</p>
+  <a href="{% url 'posts:index' %}">Идите на главную</a>
 {% endblock %}
