@@ -1,3 +1,19 @@
-# hw05_final
+# Yatube project
 
-[![CI](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml)
+## Описание
+Сайт-блог для публикации дневников.
+Создание, редактирование и удаление сообществ и постов, система подписки на авторов. Возможность добавлять изображения к постам, настройка навигации по разделам.
+https://pythonplayground.pythonanywhere.com/
+
+## Стек технологий
+* Python 3.8.5
+* Django 2.2.16
+* Django Rest Framework 3.12.14
+* Pytest 6.2.4
+
+## Установка
+
+1. Клонируйте репозиторий
+2. Установите виртуальное окружение
+3. Активируйте виртуальное окружение, установите пакеты из requirements.txt
+4. Сделайте миграции и запустите проект командой python manage.py runserver
